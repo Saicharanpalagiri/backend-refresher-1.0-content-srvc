@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { Transport } from '@nestjs/microservices';
 import { AppModule } from './app.module';
+import { queues } from './submodules/backend-refresher-1.0-rmq/src/constants/rmqQueues';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -11,7 +12,7 @@ async function bootstrap() {
       urls: [
         'amqps://ghdswtyl:0tdkAKnW71Ty8Pe3JVvDtd3qI43pr2fX@puffin.rmq2.cloudamqp.com/ghdswtyl',
       ],
-      queue: 'CONTENT_SRVC_QUEUE',
+      queue: queues.CONTENT_SERVICE_QUEUE,
       queueOptions: {
         durable: true,
       },

@@ -4,3 +4,6 @@
 [submodule "src/submodules/backend-refresher-entities-1.0"]
 	path = src/submodules/backend-refresher-entities-1.0
 	url = https://github.com/Saicharanpalagiri/backend-refresher-entities-1.0.git
+[submodule "src/submodules/backend-refresher-1.0-rmq"]
+	path = src/submodules/backend-refresher-1.0-rmq
+	url = https://github.com/Saicharanpalagiri/backend-refresher-1.0-rmq.git
