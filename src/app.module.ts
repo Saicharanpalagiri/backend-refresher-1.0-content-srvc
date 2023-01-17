@@ -7,7 +7,10 @@ import { ContentModule } from './modules/content/content.module';
 import { queues } from './submodules/backend-refresher-1.0-rmq/src/constants/rmqQueues';
 import { MsgBrokerOpsService } from './submodules/backend-refresher-1.0-rmq/src/module/msg-broker-ops/msg-broker-ops.service';
 import { Content } from './submodules/backend-refresher-entities-1.0/src/entities/content-entity';
+import { Group } from './submodules/backend-refresher-entities-1.0/src/entities/group.entity';
 import { Option } from './submodules/backend-refresher-entities-1.0/src/entities/option.entity';
+import { Reaction } from './submodules/backend-refresher-entities-1.0/src/entities/reaction.entity';
+import { Relation } from './submodules/backend-refresher-entities-1.0/src/entities/relation-entity';
 import { User } from './submodules/backend-refresher-entities-1.0/src/entities/user.entity';
 
 @Module({
@@ -19,7 +22,7 @@ import { User } from './submodules/backend-refresher-entities-1.0/src/entities/u
       username: 'charan',
       password: 'charan123',
       database: 'backend-socialmedia',
-      entities: [User, Content, Option],
+      entities: [User, Content, Option, Group, Relation, Reaction],
       synchronize: true,
       logging: true
     }),

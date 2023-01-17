@@ -1,5 +1,6 @@
-import { Controller, Delete, Get, Param, Put, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { EventPattern } from '@nestjs/microservices';
+import { ReactionDto } from 'src/submodules/backend-refresher-1.0-dtos/src/dtos/reaction.dto';
 import { RMQPayloadDto } from 'src/submodules/backend-refresher-1.0-rmq/src/dtos/rmqPayload.dto';
 import { RmqTopics } from 'src/submodules/backend-refresher-1.0-rmq/src/enums/rmqTopics';
 import { ContentService } from "./content.service";
@@ -69,4 +70,33 @@ export default class ContentController{
     }
   }
   
+
+  @Post('/adding-reaction-content')
+  async addingReactionToContent(
+    @Body() reaction: ReactionDto,
+    @Query() query: { contentId: number; userId: number },
+  ) {
+    try {
+      let { contentId, userId } = query;
+      let addingReactionToContent = await this.contentService.addingReaction(
+        contentId,
+        userId,
+        reaction,
+      );
+      return addingReactionToContent;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  @Delete('/reaction/:id')
+  async removeReaction(@Param() id: number){
+    try {
+      let removeReaction = await this.contentService.removeReaction(id)
+      return removeReaction
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
 }
