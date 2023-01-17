@@ -81,7 +81,9 @@ export class ContentService {
   async findAll(){
     try{
       console.log('find All')
-      let retrievedContents = await this.contentRepository.find();
+      let retrievedContents = await this.contentRepository.find({
+        relations: ['user'],
+      });
       return retrievedContents;
     } catch (err) {
       throw err
@@ -102,7 +104,18 @@ export class ContentService {
   }
 
   async deleteContent(ContentId: number){
+
     try{
+      let content = await this.contentRepository.findOne({
+        where: { id: ContentId },
+        relations: ['options']
+      })
+      if (content.options.length > 0) {
+        for (let i = 0; i < content.options.length; i++){
+          await this.optionRepository.delete(content.options[i].id);
+        }
+      }
+
       let deletedContent = await this.contentRepository.delete(ContentId);
       return deletedContent;
     } catch (err) {
@@ -149,6 +162,44 @@ export class ContentService {
     }
   }
 
+  async contentByGroup(groupid: number) {
+    try {
+      let group = await this.groupRepository.findOne({
+        where: {
+          id: groupid,
+        },
+        relations: ['content'],
+      });
+      return group;
+    } catch (error) {
+      throw error;
+    }
+  }
 
-
+  async removeReactionByUser(contentId: number, userId: number) {
+    try {
+      let a = {};
+      let reaction = await this.reactionRepository.find({
+        relations: {
+          users: true,
+          contents: true,
+        } ,
+        where: {
+          users: {
+            id: userId,
+          },
+          contents: {
+            id: contentId,
+          },
+        },
+      });
+      let removedReaction = await this.reactionRepository.delete({
+        id: reaction[0].id,
+      });
+      return removedReaction;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
+

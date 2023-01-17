@@ -47,6 +47,16 @@ export default class ContentController{
     }
   }
 
+  @Get('contentByGroupId/:id')
+  async getContentByGroupId(@Param('id') groupid: number){
+    try {
+      let fetchedContent = await this.contentService.contentByGroup(groupid);
+      return fetchedContent;
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   @Delete(':id')
   async deleteContent(@Param('id') contentId: number){
     try {
@@ -94,6 +104,23 @@ export default class ContentController{
     try {
       let removeReaction = await this.contentService.removeReaction(id)
       return removeReaction
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  @Delete('/reaction-user-content')
+  async removeReactionByUser(
+    @Query() query: { contentId: number; userId: number },
+  ) {
+    try {
+      let { contentId, userId } = query;
+      let removeReaction = await this.contentService.removeReactionByUser(
+        contentId,
+        userId,
+      );
+
+      return removeReaction;
     } catch (error) {
       console.log(error)
     }

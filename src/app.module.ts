@@ -42,7 +42,7 @@ import { User } from './submodules/backend-refresher-entities-1.0/src/entities/u
       },
     ]),
     ContentModule,
-    TypeOrmModule.forFeature([User, Content]),
+    TypeOrmModule.forFeature([User, Content, Reaction]),
   ],
   controllers: [AppController],
   providers: [AppService, MsgBrokerOpsService],
